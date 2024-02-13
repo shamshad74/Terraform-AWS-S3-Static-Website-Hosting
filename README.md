@@ -52,6 +52,121 @@ If we want to Create a terraform configuration file we have to use .tf (e.g., ma
 provider "aws" {
     region = "ap-south-1"
 }
+```
+2.In your Integrated Development Environment (IDE), open the terminal and navigate to the directory where you have created these configuration files.
+3.After navigating to the directory where your configuration files are located in your IDE's terminal, you can run the following command to initialize Terraform and prepare it for use with AWS:
+```terraform init```
+Running ```terraform init``` will install the necessary plugins and modules required for connecting to AWS and managing your infrastructure.
+4.And then define resource.tf file for creating bucket by using the below code :
+```
+resource "aws_s3_bucket" "bucket1" {
+    bucket = "web-bucket-mathesh"
+  
+}
+```
+
+5.Then below command for creating the bucket :
+```terraform apply -auto-approve```
+6.And then add the below codes in ***resource.tf*** file :
+```
+resource "aws_s3_bucket_public_access_block" "bucket1" {
+  bucket = aws_s3_bucket.bucket1.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_object" "index" {
+  bucket = "web-bucket-mathesh"
+  key    = "index.html"
+  source = "index.html"
+  content_type = "text/html"
+}
+
+resource "aws_s3_object" "error" {
+  bucket = "web-bucket-mathesh"
+  key    = "error.html"
+  source = "error.html"
+  content_type = "text/html"
+}
+
+
+resource "aws_s3_bucket_website_configuration" "bucket1" {
+  bucket = aws_s3_bucket.bucket1.id
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "error.html"
+  }
+
+}
+
+resource "aws_s3_bucket_policy" "public_read_access" {
+  bucket = aws_s3_bucket.bucket1.id
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+	  "Principal": "*",
+      "Action": [ "s3:GetObject" ],
+      "Resource": [
+        "${aws_s3_bucket.bucket1.arn}",
+        "${aws_s3_bucket.bucket1.arn}/*"
+      ]
+    }
+  ]
+}
+EOF
+}
+```
+7.And then again run the command :
+```terraform applyb -auto-approve```
+8.The code above will apply the necessary configurations for features such as static website hosting, bucket policies, and blocking public access to your bucket.
+9.Certainly, it's important to customize the code to your specific needs. Please remember to change the bucket name, region, and configurations as per your requirements when using the code from the Terraform documentation.
+
+### Step 5: Define the Output file
+1.We use an output file to obtain your website link in your IDE, eliminating the need to access the link through the AWS Console.
+2.Define ***output.tf*** file by using the below terraform code :
+```
+output "websiteendpoint" {
+    value = aws_s3_bucket.bucket1.website_endpoint
+  
+}
+```
+3.And then run the following command :
+```terraform apply -auto-approve```
+
+4.It will give your website link as output as shown below
+```"web-bucket-shamshad.s3-website.ap-south-1.amazonaws.com"```
+
+### Step 6: Verify the Output
+
+Copy the link and paste it in your browser.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
