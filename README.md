@@ -158,11 +158,7 @@ terraform apply -auto-approve
 
 Copy the link and paste it in your browser.
 
-
-
-
-
-
+![Screenshot 2024-02-13 130942](https://github.com/shamshad74/Terraform-AWS-S3-Static-Website-Hosting/assets/117065471/59347e6c-d0ce-41c5-ab34-3e9c2168d314)
 
 
 
