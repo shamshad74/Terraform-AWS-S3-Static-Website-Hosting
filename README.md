@@ -31,6 +31,11 @@ I provided instructions and scripts for uploading and managing my website conten
 
 ## Steps :
 
+### Step 1: Set Up Your Development Environment
+
+Install Terraform and the AWS Command Line Interface (CLI) on your local machine. Configure your AWS credentials by running * aws configure * and providing your AWS access key and secret key.
+
+
 
 
 
