@@ -33,7 +33,7 @@ I provided instructions and scripts for uploading and managing my website conten
 
 ### Step 1: Set Up Your Development Environment
 
-Install Terraform and the AWS Command Line Interface (CLI) on your local machine. Configure your AWS credentials by running aws configure and providing your AWS access key and secret key.
+Install Terraform and the AWS Command Line Interface (CLI) on your local machine. Configure your AWS credentials by running ``` aws configure ``` and providing your AWS access key and secret key.
 
 ### Step 2: Define Your Website Content
 
@@ -48,8 +48,10 @@ If we want to Create a terraform configuration file we have to use .tf (e.g., ma
 ### Define the AWS provider and required resources like S3 buckets, IAM roles, and policies
 
 1.Define ``` provider.tf ``` file using the below code :
-
-
+```
+provider "aws" {
+    region = "ap-south-1"
+}
 
 
 
